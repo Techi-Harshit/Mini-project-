@@ -1,0 +1,92 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><script>// Game variables
+const board = document.getElementById("game-board");
+const movesElement = document.getElementById("moves");
+const timeElement = document.getElementById("time");
+
+let moves = 0;
+let flippedCards = [];
+let matchedPairs = 0;
+let isGameRunning = false;
+let timer;
+
+// Symbols for cards
+const symbols = ["🍎", "🍌", "🍇", "🍒", "🍉", "🍓", "🍋", "🍍"];
+const cards = [...symbols, ...symbols].sort(() => Math.random() - 0.5);
+
+// Initialize the game
+function initGame() {
+  board.innerHTML = "";
+  cards.forEach((symbol) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML = `
+      <div class="front"></div>
+      <div class="back">${symbol}</div>
+    `;
+    card.addEventListener("click", () => flipCard(card, symbol));
+    board.appendChild(card);
+  });
+}
+
+// Flip a card
+function flipCard(card, symbol) {
+  if (!isGameRunning) {
+    isGameRunning = true;
+    startTimer();
+  }
+
+  if (card.classList.contains("flipped") || flippedCards.length === 2) return;
+
+  card.classList.add("flipped");
+  flippedCards.push({ card, symbol });
+
+  if (flippedCards.length === 2) {
+    checkMatch();
+  }
+}
+
+// Check if two flipped cards match
+function checkMatch() {
+  moves++;
+  movesElement.textContent = moves;
+
+  const [firstCard, secondCard] = flippedCards;
+  if (firstCard.symbol === secondCard.symbol) {
+    matchedPairs++;
+    flippedCards = [];
+    if (matchedPairs === symbols.length) {
+      setTimeout(() => alert(`You won in ${moves} moves and ${timeElement.textContent} seconds!`), 500);
+      resetGame();
+    }
+  } else {
+    setTimeout(() => {
+      firstCard.card.classList.remove("flipped");
+      secondCard.card.classList.remove("flipped");
+      flippedCards = [];
+    }, 1000);
+  }
+}
+
+// Start the timer
+function startTimer() {
+  let time = 0;
+  timer = setInterval(() => {
+    time++;
+    timeElement.textContent = time;
+  }, 1000);
+}
+
+// Reset the game
+function resetGame() {
+  clearInterval(timer);
+  moves = 0;
+  matchedPairs = 0;
+  flippedCards = [];
+  isGameRunning = false;
+  movesElement.textContent = moves;
+  timeElement.textContent = 0;
+  initGame();
+}
+
+// Start the game
+initGame();</script>
