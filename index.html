@@ -1,0 +1,33 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <img src="img.jpg" alt="Profile Picture" class="profile-picture" id="profile-picture">
+            <input type="file" id="profile-picture-upload" accept="image/*" hidden>
+            <h2 id="profile-name">Harshit</h2>
+            <textarea id="edit-name" hidden></textarea>
+            <p id="profile-bio">this is my bio</p>
+            <textarea id="edit-bio" hidden></textarea>
+            <ul id="profile-interests">
+                <li>Coder</li>
+                <li>Gamer</li>
+                <li>Vloger</li>
+            </ul>
+            <textarea id="edit-interests" hidden></textarea>
+            <button id="edit-button">Edit Profile</button>
+            <button id="save-button" hidden>Save Changes</button>
+        </div>
+        <div class="posts-section">
+            <p>No posts yet</p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
